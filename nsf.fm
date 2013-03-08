@@ -1,0 +1,11 @@
+oneOf(PRE86, NRE) // support Tcl 8.5 xor 8.6
+(defined(PRE86) => defined(CONST86))
+(defined(NSF_DEVELOPMENT) => defined(NDEBUG)) // correct? check line 202 in nsf.h
+(defined(PARSE_TRACE_FULL) => defined(PARSE_TRACE))
+(defined(NSF_MEM_COUNT) => defined(DO_FULL_CLEANUP))
+(defined(AOL_SERVER) => defined(TCL_THREADS))
+(defined(TCL_THREADS) => defined(DO_CLEANUP))
+(defined(DO_FULL_CLEANUP) => defined(DO_CLEANUP))
+(defined(NSF_MEM_TRACE) => defined(NSF_MEM_COUNT))
+(defined(NRE_CALLBACK_TRACE) => defined(NRE))
+(defined(CHECK_ACTIVATION_COUNTS) => defined(DO_CLEANUP))
