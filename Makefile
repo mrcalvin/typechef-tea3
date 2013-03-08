@@ -7,6 +7,12 @@ include ../Makefile
 
 UNAME = $(shell uname)
 TYPECHEF_DIR = $(shell pwd)
+
+ifndef TYPECHEF_JAR
+	TYPECHEF_JAR = ../TypeChef/TypeChef-0.3.3.jar
+endif
+
+TYPECHEF_DIR = $(shell pwd)
 TEA_DIR = $(shell cd .. && pwd)
 
 # 2) Process some TEA macros into a convenient form ...
@@ -29,6 +35,7 @@ TYPECHEF_PCONF = $(TYPECHEF_DIR)/$(PACKAGE_NAME)-partial.h
 ifeq ($(UNAME), Darwin)
 # Can we generalize this into some gcc call?
 TYPECHEF_INCL += -I /usr/llvm-gcc-4.2/bin/../lib/gcc/i686-apple-darwin11/4.2.1/include	
+TYPECHEF_PLATFORM_HEADER = -h ../TypeChef/host/platform-darwin-wrapper.h
 endif
 
 # 3) Package-specific includes? 
@@ -46,8 +53,8 @@ TYPECHEF_INCL += -I ./generic/asm/
 $(TYPECHEF_CHECKFILES) : $(TYPECHEF_PCFILES)
 $(TYPECHEF_CHECKFILES) : $(TYPECHEF_CHECKFILES_EXP)
 	(cd .. && java 	-Xmx2048M -Xss10m \
-		-jar ../TypeChef/TypeChef-0.3.3.jar \
-		-h ../TypeChef/host/platform-darwin-wrapper.h \
+		-jar $(TYPECHEF_JAR) \
+		$(TYPECHEF_PLATFORM_HEADER) \
 		--typecheck \
 	        $(TYPECHEF_INCL) \
 		--openFeat=$(TYPECHEF_FEAT) \
